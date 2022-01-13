@@ -7,6 +7,7 @@ import nav1 from "../../assets/images/nav-1.png";
 import nav2 from "../../assets/images/nav-2.png";
 import nav3 from "../../assets/images/nav-3.png";
 import nav4 from "../../assets/images/nav-4.png";
+import SearchHeader from "../../components/SearchHeader"
 
 // 导航栏数组
 const navItem = [
@@ -170,6 +171,7 @@ export default class Index extends Component {
           ) : (
             "数据正在加载"
           )}
+          <SearchHeader></SearchHeader>
         </div>
 
         <div className="nav">
