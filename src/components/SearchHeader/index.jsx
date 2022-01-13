@@ -16,7 +16,7 @@ function SearchHeader({ history, cityName, className }) {
       <Flex className="search">
         {/* 位置 */}
         <div className="location" onClick={() => history.push('/citylist')}>
-          <span className="name">上海</span>
+          <span className="name">{cityName}</span>
           <i className="iconfont icon-arrow" />
         </div>
 

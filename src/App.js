@@ -1,5 +1,6 @@
 import Home from "./pages/Home/index.js";
 import CityList from "./pages/CityList/index.js";
+import Map from "./pages/Map"
 import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
 
         {/** 配置路由view **/}
         <Route path="/home" component={Home}></Route>
-        <Route path="/city" component={CityList}></Route>
+        <Route path="/citylist" component={CityList}></Route>
+        <Route path="/map" component={Map}></Route>
       </div>
     </Router>
   );

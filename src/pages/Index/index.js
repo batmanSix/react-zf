@@ -43,6 +43,7 @@ export default class Index extends Component {
     isSwiperLoaded: false, // 解决轮播图不能重新刷新
     groups: [], // 租房数据
     news: [],
+    curCity: '', //当前城市
   };
 
   async getSwiperList() {
@@ -155,10 +156,25 @@ export default class Index extends Component {
     );
   }
 
+  // 获取城市信息
+  getLocation(){
+    const current = new window.BMapGL.LocalCity()
+    current.get(async res=>{
+      const result = await axios.get(`http://localhost:8080/area/info?name=${res.name}`)
+      console.log(result)
+      this.setState(()=>{
+        return{
+          curCity: result.data.body.label
+        }
+      })
+    })
+  }
+
   componentDidMount() {
     this.getSwiperList();
     this.getGroupsList();
     this.getNewsList();
+    this.getLocation()
   }
   render() {
     return (
@@ -169,9 +185,9 @@ export default class Index extends Component {
               {this.renderSwiper()}
             </Carousel>
           ) : (
-            "数据正在加载"
+            ''
           )}
-          <SearchHeader></SearchHeader>
+          <SearchHeader cityName={this.state.curCity}></SearchHeader>
         </div>
 
         <div className="nav">
