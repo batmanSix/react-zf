@@ -20,6 +20,12 @@ html,body,#root,.App{
   height: 100%;
 }
 
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 body{
   margin: 0;
   padding: 0;

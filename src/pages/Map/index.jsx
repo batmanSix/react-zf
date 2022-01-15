@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./index.scss"
-
+import NavHeader from "../../components/NavHeader"
 class Map extends Component{
 
 
@@ -22,6 +22,8 @@ class Map extends Component{
   render(){
     return(
       <div className='map'>
+        {/* 顶部导航栏 */}
+        <NavHeader>地图找房</NavHeader>
         <div id='container'></div>
       </div>
     ) 

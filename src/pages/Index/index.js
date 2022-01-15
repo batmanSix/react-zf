@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { Carousel, Flex, Grid,WingBlank } from "antd-mobile";
+import { Carousel, Flex, Grid, WingBlank } from "antd-mobile";
 import axios from "axios";
 import { BASE_URL } from "../../utils/url";
+import { getCurrentCity } from "../../utils/index.js";
 import "./index.scss";
 import nav1 from "../../assets/images/nav-1.png";
 import nav2 from "../../assets/images/nav-2.png";
 import nav3 from "../../assets/images/nav-3.png";
 import nav4 from "../../assets/images/nav-4.png";
-import SearchHeader from "../../components/SearchHeader"
+import SearchHeader from "../../components/SearchHeader";
 
 // 导航栏数组
 const navItem = [
@@ -43,7 +44,7 @@ export default class Index extends Component {
     isSwiperLoaded: false, // 解决轮播图不能重新刷新
     groups: [], // 租房数据
     news: [],
-    curCity: '', //当前城市
+    curCity: "", //当前城市
   };
 
   async getSwiperList() {
@@ -69,14 +70,14 @@ export default class Index extends Component {
     });
   }
 
-  async getNewsList(){
+  async getNewsList() {
     const res = await axios.get(
-      'http://localhost:8080/home/news?area=AREA%7C88cff55c-aaa4-e2e0'
-    )
+      "http://localhost:8080/home/news?area=AREA%7C88cff55c-aaa4-e2e0"
+    );
 
     this.setState({
-      news: res.data.body
-    })
+      news: res.data.body,
+    });
   }
 
   // 渲染轮播图
@@ -114,8 +115,8 @@ export default class Index extends Component {
   }
 
   // 最新资讯
-  renderNews(){
-    return this.state.news.map(item => (
+  renderNews() {
+    return this.state.news.map((item) => (
       <div className="news-item" key={item.id}>
         <div className="imgwrap">
           <img
@@ -132,7 +133,7 @@ export default class Index extends Component {
           </Flex>
         </Flex>
       </div>
-    ))
+    ));
   }
 
   // 渲染grid 组件
@@ -157,24 +158,21 @@ export default class Index extends Component {
   }
 
   // 获取城市信息
-  getLocation(){
-    const current = new window.BMapGL.LocalCity()
-    current.get(async res=>{
-      const result = await axios.get(`http://localhost:8080/area/info?name=${res.name}`)
-      console.log(result)
-      this.setState(()=>{
-        return{
-          curCity: result.data.body.label
-        }
-      })
-    })
+  async getLocation() {
+    const curCity = await getCurrentCity();
+    console.log(curCity) // 当前城市
+    this.setState(() => {
+      return {
+        curCity: curCity.label,
+      };
+    });
   }
 
   componentDidMount() {
     this.getSwiperList();
     this.getGroupsList();
     this.getNewsList();
-    this.getLocation()
+    this.getLocation();
   }
   render() {
     return (
@@ -185,7 +183,7 @@ export default class Index extends Component {
               {this.renderSwiper()}
             </Carousel>
           ) : (
-            ''
+            ""
           )}
           <SearchHeader cityName={this.state.curCity}></SearchHeader>
         </div>
